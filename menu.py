@@ -17,8 +17,8 @@ def create_menu(janela, mouse, menu_options):
         [text_width, text_height] = get_text_dimensions(menu_options[i], constants.MENU_FONT_SIZE)
 
         #Por algum motivo a palavra DIFICULDADE estava ficando mal centralizada, então fiz um ajuste só pra que ela ficasse centralizada
-        if(menu_options[i] == "DIFICULDADE"):
-            text_x = buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 - 25
+        if(menu_options[i] == "CONFIGURAÇÕES"):
+            text_x = buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 - 40
         else:
             text_x = buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 -15
         text_y = constants.BUTTON_MARGIN_TOP + i * constants.BUTTON_MARGIN + constants.BUTTON_HEIGHT/2 - text_height/2 - 5
@@ -47,7 +47,7 @@ def handle_menu(janela, teclado, mouse, bg):
         EXIT = 4
 
         if state == MENU:
-            menu_choice = create_menu(janela, mouse, ["JOGAR", "DIFICULDADE", "RANKING", "SAIR"])
+            menu_choice = create_menu(janela, mouse, ["JOGAR", "CONFIGURAÇÕES","SAIR"])
 
             match(menu_choice):
                 case 0:
