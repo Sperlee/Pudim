@@ -4,6 +4,7 @@ from utils import get_text_dimensions
 import constants
 import pygame
 from PPlay.keyboard import Keyboard
+from fases.fase1.fase1 import fase1
 
 def create_menu(janela, mouse, menu_options):
 
@@ -60,7 +61,7 @@ def handle_menu(janela, teclado, mouse, bg):
                     state = EXIT
 
         elif state == PLAYING:
-            play(janela, mouse)
+            play(janela, mouse, bg)
 
         elif state == DIFFICULTY:
             option = ["VOLTAR", "FÁCIL", "MÉDIO", "DIFÍCIL"]
@@ -89,13 +90,14 @@ def ranking(janela, mouse, menu_options):
     while True:
         create_menu(janela, mouse, menu_options)
 
-def play(janela, mouse):
+def play(janela, mouse, bg):
 
     #Loop vazio que só vai sair quando o usuário pressionar a tecla ESC
     while True:
-                if Keyboard().key_pressed("ESC"):
-                    break
-                janela.update()
+        fase1(janela, bg)
+        if Keyboard().key_pressed("ESC"):
+            break
+        janela.update()
 
 def difficulty(janela, mouse, menu_options):
     return create_menu(janela, mouse, menu_options)
