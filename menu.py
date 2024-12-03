@@ -5,6 +5,7 @@ import constants
 import pygame
 from PPlay.keyboard import Keyboard
 from fases.fase1.fase1 import fase1
+from fases.fase_2.fase2 import fase2
 
 def create_menu(janela, mouse, menu_options):
 
