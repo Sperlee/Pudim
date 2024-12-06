@@ -22,7 +22,7 @@ def criar(janela):
     pudim.y = janela.height - pedras[1].height + 15
 
     #julia
-    julia.x = pedras[3].x + julia.width/2
+    julia.x = pedras[3].x + julia.width/2 + 30
     julia.y = janela.height - pedras[1].height - julia.height/2 + 35
 
     #sapo_verde
@@ -35,3 +35,14 @@ def criar(janela):
         sapo_vermelho[i].y = janela.height - pedras[1].height
 
     return fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho, efeito
+
+def draw(janela, fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho, efeito):
+    fundo.draw()
+    for i in range(1,8):
+        pedras[i].draw()
+    for i in range(3):
+        sapo_vermelho[i].draw()
+    pudim.draw()
+    julia.draw()
+    sapo_verde.draw()
+    janela.update()

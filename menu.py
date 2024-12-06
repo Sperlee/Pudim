@@ -95,7 +95,7 @@ def play(janela, mouse, bg):
 
     #Loop vazio que só vai sair quando o usuário pressionar a tecla ESC
     while True:
-        fase1(janela, bg)
+        #fase2(janela,mouse)
         if Keyboard().key_pressed("ESC"):
             break
         janela.update()

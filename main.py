@@ -19,4 +19,3 @@ while True:
 
     if teclado.key_pressed("ESC"):
         janela.close()
-
