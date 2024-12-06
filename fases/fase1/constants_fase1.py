@@ -21,3 +21,7 @@ def define_game_images(janela):
     conteiner.set_position(janela.width/2 - conteiner.width/2, piso.y - conteiner.height + 5)
 
     return [piso, coluna_guindaste_esquerda, coluna_guindaste_direita, guindaste_superior, painel_de_controle, placa_aviso, conteiner]
+
+def draw_images(images):
+    for image in images:
+        image.draw()
