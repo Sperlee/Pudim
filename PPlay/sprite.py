@@ -1,6 +1,4 @@
 # Modules
-import sys
-import time
 import pygame
 from . import window
 from . import animation
