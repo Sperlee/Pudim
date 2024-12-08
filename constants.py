@@ -15,3 +15,5 @@ HOVER_TEXT_COLOR = (255, 0, 0)
 
 #Tamanho da fonte do menu
 MENU_FONT_SIZE = 36
+
+desired_fps = 300

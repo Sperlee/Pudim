@@ -1,21 +1,29 @@
-from PPlay.window import Window
-from PPlay.gameimage import GameImage
-from PPlay.keyboard import Keyboard
-from PPlay.mouse import Mouse
-import constants
-from menu import handle_menu
+from PPlay.window import *
+from PPlay.gameimage import *
+from BaseClass import basic_setup
+from MenuClass import Menu
+from PlayClass import Play
+from PerformanceClass import PerformanceMonitor
 
-janela = Window(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT)
-teclado = Keyboard()
-mouse = Mouse()
 
-bg = GameImage("./assets/bg.jpeg")
+menu = Menu()
+game = Play()
+perfomance_monitor = PerformanceMonitor()
 
+
+
+# loop principal
 while True:
+    basic_setup.bg.draw()
 
-    bg.draw()
+    match menu.click_button_index:
+        case(0):
+            game.play_fase_1()
+            # perfomance_monitor.measure_fps()
+        case(-1):
+            menu.draw_menu()
 
-    handle_menu(janela, teclado, mouse, bg)
 
-    if teclado.key_pressed("ESC"):
-        janela.close()
+
+
+    basic_setup.janela.update()

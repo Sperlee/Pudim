@@ -1,6 +1,7 @@
 from PPlay.sprite import Sprite
 from PPlay.keyboard import Keyboard
 from PPlay.window import Window
+from BaseClass import basic_setup
 
 class Julia(Sprite):
     def __init__(self, janela, x, y, speed_x, speed_y, jump_heigth):
@@ -13,7 +14,7 @@ class Julia(Sprite):
         self.speed_y = -speed_y
         self.jump_width = jump_heigth
         self.teclado = Keyboard()
-        self.janela = janela
+        basic_setup.janela = janela
         # Guardar as diferentes animações
         self.sprite_parado = "sprites/julia_sprites/julia_parada.png"
         self.sprite_andando_direita = "sprites/julia_sprites/julia_andando_RIGHT.png"
@@ -63,32 +64,32 @@ class Julia(Sprite):
             self.k = 0
 
         self.set_position(x, y)  # Manter a posição
-        self.move_key_x(self.speed_x * self.janela.delta_time())
+        self.move_key_x(self.speed_x * basic_setup.janela.delta_time())
 
 
-    def pular(self, new_x, new_y, bg, draw_images, images):
+    def pular(self, new_x, new_y, draw_images):
 
         self.is_pulando = True
 
         self.set_position(new_x, new_y)
         old_speed = self.speed_y
 
-        while(self.y <= self.janela.height -113 - 143 + 5):
+        while(self.y <= basic_setup.janela.height -113 - 143 + 5):
             
-            self.y += ((self.speed_y)* self.janela.delta_time())
-            self.speed_y += 300*self.janela.delta_time()
+            self.y += ((self.speed_y)* basic_setup.janela.delta_time())
+            self.speed_y += 300*basic_setup.janela.delta_time()
       
             self.andar(self.x, self.y)
-            bg.draw()
+            basic_setup.bg.draw()
 
 
-            draw_images(images)
+            draw_images()
 
             self.draw()
-            self.janela.update()
+            basic_setup.janela.update()
 
         self.speed_y = old_speed
-        self.y = self.janela.height -113 - 143 + 5
+        self.y = basic_setup.janela.height -113 - 143 + 5
         self.is_pulando = False
 
     def draw(self):
