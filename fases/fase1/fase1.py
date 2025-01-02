@@ -38,11 +38,37 @@ class Fase1:
 
         self.images = [self.piso,self.conteiner, self.coluna_guindaste_esquerda, self.coluna_guindaste_direita, self.cabo_guindaste, self.gancho, self.guindaste_superior, self.painel_de_controle, self.placa_aviso]
 
+        self.caixas = [Sprite("fases/fase1/imagens/caixa1.png"), Sprite("fases/fase1/imagens/caixa2.png"), Sprite("fases/fase1/imagens/caixa3.png"), Sprite("fases/fase1/imagens/caixa4.png"), Sprite("fases/fase1/imagens/caixa5.png")]
+
+        self.divs = [GameImage("fases/fase1/imagens/divisoria.png"), GameImage("fases/fase1/imagens/divisoria.png"), GameImage("fases/fase1/imagens/divisoria.png")]
+
+        for i in range(0, 3):
+            self.divs[i].set_position(1100 - i*400 - 10, self.piso.y - self.divs[i].height)
+
         self.play_mode = 0 # 0 = jogo normal na plataforma ,  1 = jogo pelo guindaste
 
     def draw_images(self):
         for image in self.images:
             image.draw()
+        for caixa in self.caixas:
+            caixa.draw()
+        for div in self.divs:
+            div.draw()
+
+
+       
+
+        
+
+    
+        
+
+    def set_caixas_position(self):
+
+        self.caixas[4].set_position(1100, self.piso.y - self.caixas[4].height)
+        for i in range(len(self.caixas)-2, -1, -1):
+            self.caixas[i].y = self.caixas[i+1].y - self.caixas[i].height + 10
+            self.caixas[i].x = self.caixas[i+1].x +50
 
     def mover_guindaste(self):
             
@@ -62,16 +88,28 @@ class Fase1:
                 self.cabo_guindaste.move_key_x(self.guindaste_speed*basic_setup.janela.delta_time())
                 self.gancho.move_key_x(self.guindaste_speed*basic_setup.janela.delta_time())
 
+            if(basic_setup.teclado.key_pressed("ESC")):
+                self.play_mode = 0
+
  
                 
 
 
     def run(self):
         basic_setup.bg.__init__("fases/fase1/imagens/plano_de_fundo.png")
+        self.set_caixas_position()
+
 
         while True:
             basic_setup.bg.draw()
             self.draw_images()
+
+            for caixa in self.caixas:
+                if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("SPACE") and (not caixa.collided(self.guindaste_superior) or basic_setup.teclado.key_pressed("DOWN")) and (not caixa.collided(self.piso) or basic_setup.teclado.key_pressed("UP"))):
+                    caixa.move_key_x(self.guindaste_speed*basic_setup.janela.delta_time())
+                    caixa.move_key_y(self.guindaste_speed*basic_setup.janela.delta_time())
+                
+            
             match self.play_mode:
                 case 0:
                     self.julia.andar(self.julia.x, self.julia.y)
