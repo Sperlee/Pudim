@@ -73,12 +73,9 @@
 
 ---
 
-## 📜 Licença
-Este projeto é distribuído sob a licença [Adicionar licença aqui, se houver].
-
----
-
 ## 🚀 Como Executar o Jogo
 1. Clone este repositório:
    ```bash
    git clone https://github.com/Sperlee/Pudim.git
+2. Execute o arquivo main.py
+3. Bom jogo :)
