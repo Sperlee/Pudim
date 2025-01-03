@@ -95,3 +95,7 @@ class Julia(Sprite):
     def draw(self):
         super().draw()
         self.update()
+
+    def call_super_init(self, image):
+        super().__init__(image)
+        super().set_total_duration(1000)
