@@ -77,7 +77,7 @@ class Julia(Sprite):
         while(self.y <= basic_setup.janela.height -113 - 143 + 5):
             
             self.y += ((self.speed_y)* basic_setup.janela.delta_time())
-            self.speed_y += 300*basic_setup.janela.delta_time()
+            self.speed_y += 700*basic_setup.janela.delta_time()
       
             self.andar(self.x, self.y)
             basic_setup.bg.draw()
@@ -95,3 +95,7 @@ class Julia(Sprite):
     def draw(self):
         super().draw()
         self.update()
+
+    def call_super_init(self, image):
+        super().__init__(image)
+        super().set_total_duration(1000)
