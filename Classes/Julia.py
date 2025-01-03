@@ -37,22 +37,22 @@ class Julia(Sprite):
 
         if (key == 'RIGHT' or key == 'LEFT') and self.k == 0:
             if key == "RIGHT":
-                print(self.is_pulando)
                 
                 if(not self.is_pulando ):
                     super().__init__(self.sprite_andando_direita, 9)
                     self.set_total_duration(1000)
                     self.set_position(new_x, new_y)
             elif key == "LEFT":
-                print(self.is_pulando)
                 if(not self.is_pulando):
                     super().__init__(self.sprite_andando_esquerda, 9)
                     self.set_total_duration(1000)
                     self.set_position(new_x, new_y)
-            if(self.is_pulando):
-                super().__init__(self.sprite_pulo)
-                self.set_total_duration(1000)
-                self.set_position(new_x, new_y)
+            # if(self.is_pulando):
+            #     super().__init__(self.sprite_pulo)
+            #     self.set_total_duration(1000)
+            #     self.set_position(new_x, new_y)
+
+            #Alguns contratempos foram encontrados, decisão foi de não implementar a animação de pulo
 
 
             self.k = 1
