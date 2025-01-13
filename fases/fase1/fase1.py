@@ -2,16 +2,23 @@ from Classes.Julia import Julia
 from BaseClass import basic_setup
 from PPlay.gameimage import GameImage
 from PPlay.sprite import Sprite
-
+from fases.fase1.Pudim import Pudim
+import pygame
+import math
 
 class Fase1:
     def __init__(self):
-        self.julia = Julia(basic_setup.janela, 300, basic_setup.janela.height - 113 - 143 + 5, 200, 150, 100)
-
+        
 
         #Elementos da cena
         self.piso = GameImage("fases/fase1/imagens/piso.png")
         self.piso.set_position(0, basic_setup.janela.height - self.piso.height)
+
+        self.julia = Julia(basic_setup.janela, 300, basic_setup.janela.height - 113 - 143 + 5, 200, 150, 100)
+
+        self.pudim = Pudim()
+        self.pudim.set_position(400, self.piso.y - self.pudim.height + 10)
+        print(self.piso.y - self.pudim.height + 10)
 
         self.coluna_guindaste_esquerda = GameImage("fases/fase1/imagens/guindaste/coluna_guindaste.png")
         self.coluna_guindaste_esquerda.set_position(20, basic_setup.janela.height - self.piso.height - self.coluna_guindaste_esquerda.height)
@@ -58,12 +65,18 @@ class Fase1:
         for i in range(len(self.divs)):
             self.divs[i].set_position(200 + i*450 - 10, self.piso.y - self.divs[i].height)
 
-        self.play_mode = 0 # 0 = jogo normal na plataforma ,  1 = jogo pelo guindaste
+        self.play_mode = 0 # 0 = jogo com Julia , 1 = jogo com o pudim, 2 = jogo pelo guindaste
 
 
 
         self.texto_guindaste = GameImage("fases/fase1/imagens/texto_guindaste.png")
         self.texto_manual = GameImage("fases/fase1/imagens/manual.png")
+
+        #Objetivo
+        self.coleira = Sprite("fases/fase1/imagens/coleira.png")
+        self.coleira.set_position(self.conteiner.x + 50, self.conteiner.y - self.coleira.height + 10)
+
+        self.coleira_speed = 200
 
     def draw_images(self):
         for image in self.images:
@@ -186,22 +199,41 @@ class Fase1:
 
                     if basic_setup.teclado.key_pressed("SPACE"):
                         if self.julia.x > self.coluna_guindaste_esquerda.x and self.julia.x < self.coluna_guindaste_esquerda.x + self.coluna_guindaste_esquerda.width - 30:
-                            self.play_mode = 1
+                            self.play_mode = 2
                             x, y = self.julia.x, self.julia.y
                             self.julia.call_super_init("sprites/julia_sprites/julia_costas.png")
                             self.julia.set_position(x, y)
                             break 
-                        else:
-                            self.julia.pular(self.julia.x, self.julia.y, self.draw_images)
+                        # else:
+                        #     self.julia.pular(self.julia.x, self.julia.y, self.draw_images)
 
+                    if basic_setup.teclado.key_pressed("O"):
+                        self.play_mode = 1
+                        pygame.time.delay(100)
+                
                 case 1:
+                    self.pudim.andar(self.caixas, self.piso, self.conteiner)
+
+                    if basic_setup.teclado.key_pressed("O") and not self.pudim.pulando:
+                        self.play_mode = 0
+                        pygame.time.delay(100)
+                    elif basic_setup.teclado.key_pressed("SPACE") or self.pudim.pulando:
+                        if(self.pudim.pulando == False):
+                            self.pudim.old_y = self.pudim.y
+                            self.pudim.pulando = True
+                        self.pudim.pular(self.caixas, self.piso, self.conteiner)
+                 
+
+
+
+                case 2:
                     self.texto_manual.set_position(150, self.conteiner.y - 70)
                     self.texto_manual.draw()
 
                     self.mover_guindaste()
 
                     for index, caixa in enumerate(self.caixas):
-                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("P") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
+                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("S") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
                            
                             if self.pode_pegar_caixa(index):
                                 self.movendo_caixa = [True, index]
@@ -213,7 +245,7 @@ class Fase1:
 
             
 
-                    if basic_setup.teclado.key_pressed("S") and self.movendo_caixa[0] and self.pode_soltar_caixa(self.movendo_caixa[1]):
+                    if basic_setup.teclado.key_pressed("D") and self.movendo_caixa[0] and self.pode_soltar_caixa(self.movendo_caixa[1]):
                         
                         self.caixa_caindo = [True,  self.movendo_caixa[1]]
 
@@ -234,7 +266,14 @@ class Fase1:
 
                     
             self.julia.draw()
+            self.pudim.draw()
+            self.coleira.draw()
+            self.coleira.move_y(math.sin(self.coleira_speed*basic_setup.janela.delta_time())*0.1)
+            self.coleira_speed += 500*basic_setup.janela.delta_time()
             basic_setup.janela.update()
+
+            if self.pudim.collided(self.coleira):
+                return -1
 
 
 

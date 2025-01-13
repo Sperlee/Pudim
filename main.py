@@ -18,7 +18,8 @@ while True:
 
     match menu.click_button_index:
         case(0):
-            game.play_fase_1()
+            menu.click_button_index = game.play_fase_1()
+            print(menu.click_button_index)
             # perfomance_monitor.measure_fps()
         case(-1):
             menu.draw_menu()
