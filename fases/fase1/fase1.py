@@ -206,7 +206,7 @@ class Fase1:
                         pygame.time.delay(100)
                 
                 case 1:
-                    self.pudim.andar()
+                    self.pudim.andar(self.caixas, self.piso, self.conteiner)
 
                     if basic_setup.teclado.key_pressed("O") and not self.pudim.pulando:
                         self.play_mode = 0
@@ -214,8 +214,9 @@ class Fase1:
                     elif basic_setup.teclado.key_pressed("SPACE") or self.pudim.pulando:
                         if(self.pudim.pulando == False):
                             self.pudim.old_y = self.pudim.y
-                        self.pudim.pular()
-
+                            self.pudim.pulando = True
+                        self.pudim.pular(self.caixas, self.piso, self.conteiner)
+                 
 
 
 
