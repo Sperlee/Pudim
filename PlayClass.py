@@ -13,7 +13,9 @@ class Play():
         print("bhjn")
 
     def play_fase_1(self):
-        fase_1.run()
+        fase_1.__init__()
+        output = fase_1.run()
+        return output
 
 
 game = Play

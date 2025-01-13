@@ -14,7 +14,7 @@ class Pudim(Sprite):
         self.old_speed_cair =  self.speed_cair
         self.old_speed_y = self.speed_y # velocidade anterior
         self.old_y = self.y
-        self.aceleracao_pulo = 450
+        self.aceleracao_pulo = 550
         # self.jump_width = 0
         self.pulando = False
         self.sprite_parado = "sprites/pudim/pudim_parado.png"

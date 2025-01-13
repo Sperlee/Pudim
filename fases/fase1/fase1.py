@@ -4,7 +4,7 @@ from PPlay.gameimage import GameImage
 from PPlay.sprite import Sprite
 from fases.fase1.Pudim import Pudim
 import pygame
-
+import math
 
 class Fase1:
     def __init__(self):
@@ -71,6 +71,12 @@ class Fase1:
 
         self.texto_guindaste = GameImage("fases/fase1/imagens/texto_guindaste.png")
         self.texto_manual = GameImage("fases/fase1/imagens/manual.png")
+
+        #Objetivo
+        self.coleira = Sprite("fases/fase1/imagens/coleira.png")
+        self.coleira.set_position(self.conteiner.x + 50, self.conteiner.y - self.coleira.height + 10)
+
+        self.coleira_speed = 200
 
     def draw_images(self):
         for image in self.images:
@@ -227,7 +233,7 @@ class Fase1:
                     self.mover_guindaste()
 
                     for index, caixa in enumerate(self.caixas):
-                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("P") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
+                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("S") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
                            
                             if self.pode_pegar_caixa(index):
                                 self.movendo_caixa = [True, index]
@@ -239,7 +245,7 @@ class Fase1:
 
             
 
-                    if basic_setup.teclado.key_pressed("S") and self.movendo_caixa[0] and self.pode_soltar_caixa(self.movendo_caixa[1]):
+                    if basic_setup.teclado.key_pressed("D") and self.movendo_caixa[0] and self.pode_soltar_caixa(self.movendo_caixa[1]):
                         
                         self.caixa_caindo = [True,  self.movendo_caixa[1]]
 
@@ -261,7 +267,13 @@ class Fase1:
                     
             self.julia.draw()
             self.pudim.draw()
+            self.coleira.draw()
+            self.coleira.move_y(math.sin(self.coleira_speed*basic_setup.janela.delta_time())*0.1)
+            self.coleira_speed += 500*basic_setup.janela.delta_time()
             basic_setup.janela.update()
+
+            if self.pudim.collided(self.coleira):
+                return -1
 
 
 
