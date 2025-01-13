@@ -2,16 +2,23 @@ from Classes.Julia import Julia
 from BaseClass import basic_setup
 from PPlay.gameimage import GameImage
 from PPlay.sprite import Sprite
+from fases.fase1.Pudim import Pudim
+import pygame
 
 
 class Fase1:
     def __init__(self):
-        self.julia = Julia(basic_setup.janela, 300, basic_setup.janela.height - 113 - 143 + 5, 200, 150, 100)
-
+        
 
         #Elementos da cena
         self.piso = GameImage("fases/fase1/imagens/piso.png")
         self.piso.set_position(0, basic_setup.janela.height - self.piso.height)
+
+        self.julia = Julia(basic_setup.janela, 300, basic_setup.janela.height - 113 - 143 + 5, 200, 150, 100)
+
+        self.pudim = Pudim()
+        self.pudim.set_position(400, self.piso.y - self.pudim.height + 10)
+        print(self.piso.y - self.pudim.height + 10)
 
         self.coluna_guindaste_esquerda = GameImage("fases/fase1/imagens/guindaste/coluna_guindaste.png")
         self.coluna_guindaste_esquerda.set_position(20, basic_setup.janela.height - self.piso.height - self.coluna_guindaste_esquerda.height)
@@ -58,7 +65,7 @@ class Fase1:
         for i in range(len(self.divs)):
             self.divs[i].set_position(200 + i*450 - 10, self.piso.y - self.divs[i].height)
 
-        self.play_mode = 0 # 0 = jogo normal na plataforma ,  1 = jogo pelo guindaste
+        self.play_mode = 0 # 0 = jogo com Julia , 1 = jogo com o pudim, 2 = jogo pelo guindaste
 
 
 
@@ -186,15 +193,33 @@ class Fase1:
 
                     if basic_setup.teclado.key_pressed("SPACE"):
                         if self.julia.x > self.coluna_guindaste_esquerda.x and self.julia.x < self.coluna_guindaste_esquerda.x + self.coluna_guindaste_esquerda.width - 30:
-                            self.play_mode = 1
+                            self.play_mode = 2
                             x, y = self.julia.x, self.julia.y
                             self.julia.call_super_init("sprites/julia_sprites/julia_costas.png")
                             self.julia.set_position(x, y)
                             break 
-                        else:
-                            self.julia.pular(self.julia.x, self.julia.y, self.draw_images)
+                        # else:
+                        #     self.julia.pular(self.julia.x, self.julia.y, self.draw_images)
 
+                    if basic_setup.teclado.key_pressed("O"):
+                        self.play_mode = 1
+                        pygame.time.delay(100)
+                
                 case 1:
+                    self.pudim.andar()
+
+                    if basic_setup.teclado.key_pressed("O") and not self.pudim.pulando:
+                        self.play_mode = 0
+                        pygame.time.delay(100)
+                    elif basic_setup.teclado.key_pressed("SPACE") or self.pudim.pulando:
+                        if(self.pudim.pulando == False):
+                            self.pudim.old_y = self.pudim.y
+                        self.pudim.pular()
+
+
+
+
+                case 2:
                     self.texto_manual.set_position(150, self.conteiner.y - 70)
                     self.texto_manual.draw()
 
@@ -234,6 +259,7 @@ class Fase1:
 
                     
             self.julia.draw()
+            self.pudim.draw()
             basic_setup.janela.update()
 
 
