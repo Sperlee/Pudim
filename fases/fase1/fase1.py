@@ -203,13 +203,10 @@ class Fase1:
                             x, y = self.julia.x, self.julia.y
                             self.julia.call_super_init("sprites/julia_sprites/julia_costas.png")
                             self.julia.set_position(x, y)
-                            break 
-                        # else:
-                        #     self.julia.pular(self.julia.x, self.julia.y, self.draw_images)
-
+                          
                     if basic_setup.teclado.key_pressed("O"):
                         self.play_mode = 1
-                        pygame.time.delay(100)
+                        pygame.time.delay(500)
                 
                 case 1:
                     self.pudim.andar(self.caixas, self.piso, self.conteiner)
