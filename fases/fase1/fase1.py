@@ -81,6 +81,9 @@ class Fase1:
 
         self.coleira_speed = 200
 
+
+        #Coisas do manual de regrass
+
         self.manual = GameImage("fases/fase1/imagens/pergaminho_manual.png")
         self.manual.set_position(basic_setup.janela.width - self.manual.width - 50 , basic_setup.janela.height - self.manual.height - 25)
         # basic_setup.set_scale("fases/fase1/imagens/pergaminho_manual.png", 0.9)
