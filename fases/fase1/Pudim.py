@@ -7,7 +7,6 @@ class Pudim(Sprite):
     def __init__(self):
         super().__init__("sprites/pudim/pudim_parado.png")
         self.set_total_duration(1000)
-        # self.k = 0
         self.speed_x = 200
         self.speed_y = - 300
         self.speed_cair = 300
@@ -15,7 +14,7 @@ class Pudim(Sprite):
         self.old_speed_y = self.speed_y # velocidade anterior
         self.old_y = self.y
         self.aceleracao_pulo = 550
-        # self.jump_width = 0
+
         self.pulando = False
         self.sprite_parado = "sprites/pudim/pudim_parado.png"
         self.sprite_andando_direita = "sprites/pudim/pudim_andando_direita.png"
@@ -31,7 +30,7 @@ class Pudim(Sprite):
         x, y = self.x, self.y
         standing = False
 
-        # Check if standing on any surface
+        
         for caixa in caixas:
             if (self.x + self.width > caixa.x and 
                 self.x < caixa.x + caixa.width and 
@@ -44,18 +43,15 @@ class Pudim(Sprite):
             
                 return
 
-        # Check container collision
         if (not standing and 
             self.x + self.width > conteiner.x and 
             self.x < conteiner.x + conteiner.width and 
             abs(self.y + self.height - conteiner.y) < 5):
             standing = True
 
-        # Check floor collision
         if abs(self.y + self.height - piso.y) < 5:
             standing = True
 
-        # Handle walking animation
         if basic_setup.teclado.key_pressed("RIGHT") and self.k == 0:
             super().__init__(self.sprite_andando_direita, 8)
             self.set_total_duration(1000)
@@ -71,7 +67,6 @@ class Pudim(Sprite):
             self.set_total_duration(1000)
             self.k = 0
 
-        # Update position and handle falling
         self.set_position(x, y)
         super().move_key_x(self.speed_x * basic_setup.janela.delta_time())
 
