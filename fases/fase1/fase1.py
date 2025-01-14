@@ -5,9 +5,12 @@ from PPlay.sprite import Sprite
 from fases.fase1.Pudim import Pudim
 import pygame
 import math
+from Transition import Transition
 
 class Fase1:
     def __init__(self):
+
+        self.transicao = Transition()
         
 
         #Elementos da cena
@@ -77,6 +80,16 @@ class Fase1:
         self.coleira.set_position(self.conteiner.x + 50, self.conteiner.y - self.coleira.height + 10)
 
         self.coleira_speed = 200
+
+        self.manual = GameImage("fases/fase1/imagens/pergaminho_manual.png")
+        self.manual.set_position(basic_setup.janela.width - self.manual.width - 50 , basic_setup.janela.height - self.manual.height - 25)
+        # basic_setup.set_scale("fases/fase1/imagens/pergaminho_manual.png", 0.9)
+
+        self.pergaminho_regras = GameImage("fases/fase1/imagens/regras.png")
+        self.pergaminho_regras.set_position(25 ,50)
+        # basic_setup.set_scale("fases/fase1/imagens/regras.png", 1.1)
+
+        self.texto_regras = ["1. Use as setas para mover a Julia", "2. Apertando a letra 'O' você assume o controle do outro personagem", "3. Use a barra de espaço para pular com o pudim", "4. Use a barra de espaço para controlar o guindaste com a Julia", "5. Quando controlando o guindaste,", "use a tecla 'A' para pegar uma caixa", "e a tecla 'D' para soltá-la", "6. Caixas menores não podem ficar em cima de caixas grandes"]
 
     def draw_images(self):
         for image in self.images:
@@ -179,6 +192,7 @@ class Fase1:
 
 
     def run(self):
+        
         basic_setup.bg.__init__("fases/fase1/imagens/plano_de_fundo.png")
         self.set_caixas_position()
 
@@ -230,7 +244,7 @@ class Fase1:
                     self.mover_guindaste()
 
                     for index, caixa in enumerate(self.caixas):
-                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("S") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
+                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("A") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
                            
                             if self.pode_pegar_caixa(index):
                                 self.movendo_caixa = [True, index]
@@ -265,12 +279,23 @@ class Fase1:
             self.julia.draw()
             self.pudim.draw()
             self.coleira.draw()
+            self.manual.draw()
             self.coleira.move_y(math.sin(self.coleira_speed*basic_setup.janela.delta_time())*0.1)
             self.coleira_speed += 500*basic_setup.janela.delta_time()
-            basic_setup.janela.update()
+
+            if basic_setup.mouse.is_over_object(self.manual):
+                self.manual.set_position(basic_setup.janela.width - self.manual.width - 55 , basic_setup.janela.height - self.manual.height - 30)
+
+                self.pergaminho_regras.draw()
+                basic_setup.draw_pixel_text(self.texto_regras, self.pergaminho_regras.x+200, self.pergaminho_regras.y+175, 15, (0,0,0))
+            else:
+                self.manual.set_position(basic_setup.janela.width - self.manual.width - 50 , basic_setup.janela.height - self.manual.height - 25)
 
             if self.pudim.collided(self.coleira):
                 return -1
+            
+            basic_setup.janela.update()
+
 
 
 
