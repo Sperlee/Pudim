@@ -2,6 +2,7 @@ from PPlay.gameimage import GameImage
 from utils import get_text_dimensions
 import constants
 from BaseClass import basic_setup
+import pygame
 
 
 class Menu():
@@ -10,7 +11,7 @@ class Menu():
         self.teclado = basic_setup.teclado
         self.mouse = basic_setup.mouse
         
-        self.current_buttons_words = ["START", "DIFICULDADE", "RANKING", "SAIR"]
+        self.current_buttons_words = ["START", "SAIR"]
         self.current_buttons = [GameImage("./assets/button.png") for i in range(len(self.current_buttons_words))]
         self.click_button_index = -1
         
@@ -50,6 +51,7 @@ class Menu():
 
                 if self.mouse.is_button_pressed(1):
                     self.click_button_index = i
+                    pygame.time.delay(100)
 
     def draw_menu(self):
 
