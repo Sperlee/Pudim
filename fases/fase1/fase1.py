@@ -201,7 +201,7 @@ class Fase1:
                     self.mover_guindaste()
 
                     for index, caixa in enumerate(self.caixas):
-                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("P") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
+                        if(self.gancho.collided(caixa) and basic_setup.teclado.key_pressed("D") and not self.movendo_caixa[0] and not self.caixa_caindo[0]):
                            
                             if self.pode_pegar_caixa(index):
                                 self.movendo_caixa = [True, index]
@@ -213,7 +213,7 @@ class Fase1:
 
             
 
-                    if basic_setup.teclado.key_pressed("S") and self.movendo_caixa[0] and self.pode_soltar_caixa(self.movendo_caixa[1]):
+                    if basic_setup.teclado.key_pressed("F") and self.movendo_caixa[0] and self.pode_soltar_caixa(self.movendo_caixa[1]):
                         
                         self.caixa_caindo = [True,  self.movendo_caixa[1]]
 
