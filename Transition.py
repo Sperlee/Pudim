@@ -24,6 +24,7 @@ class Transition:
     def fade_in(self, speed=200):
         done = False
         while not done:
+            
             self.alpha -= speed*basic_setup.janela.delta_time()
             if self.alpha <= 0:
                 self.alpha = 0
@@ -33,3 +34,4 @@ class Transition:
             basic_setup.bg.draw()
             basic_setup.janela.get_screen().blit(self.fade_surface, (0,0))
             basic_setup.janela.update()
+
