@@ -34,12 +34,23 @@ class Play():
         ]
 
         self.texto_4 = [
-        "Julia chegou ao parque e", "encontrou um grande lago.", 
-        "Do outro lado, está Pipoca,", "mas há sapos pelo caminho.", 
-        "Eles podem atrapalhar sua", "travessia até a poodle.", "", 
-        "Ajude Julia a atravessar o", "lago e desviar dos sapos.", 
-        "Pipoca está tão perto agora!", "Não desista!"
+            "Julia chegou ao parque e", "encontrou um grande lago.", 
+            "Do outro lado, está Pipoca,", "mas há sapos pelo caminho.", 
+            "Eles podem atrapalhar sua", "travessia até a poodle.", "", 
+            "Ajude Julia a atravessar o", "lago e desviar dos sapos.", 
+            "Pipoca está tão perto agora!", "Não desista!"
+            ]
+
+        self.texto_final = [
+            "Parabéns! Você conseguiu!", "", 
+            "Depois de uma grande aventura,", "Julia, Pudim e Pipoca estão", 
+            "finalmente juntos novamente.", "", 
+            "Sua determinação foi essencial", "para superar todos os desafios", 
+            "e trazer Pipoca de volta para", "os braços de Julia.", "", 
+            "Obrigado por jogar e por ser", "uma parte dessa linda história!", 
+            "Até a próxima aventura!"
         ]
+
 
     
 
@@ -124,6 +135,35 @@ class Play():
         self.transicao.fade_out()
         self.transicao.fade_in()
     
+    def play_final(self, musica):
+        musica.stop()
+        self.transicao.fade_out()
+        basic_setup.bg.__init__("assets/imagem_final.png")
+        musica.__init__("assets/final_song.mp3")
+        musica.loop = True
+        musica.play()
+        self.transicao.fade_in()
+
+        while basic_setup.teclado.key_pressed("SPACE") == False:
+            basic_setup.bg.draw()
+            basic_setup.draw_pixel_text(
+            self.texto_final, 
+            100,  # x position 
+            50,  # y position
+            25,   # size
+            (255,255,255),  # color
+           
+        )
+            basic_setup.janela.update()
+
+
+        musica.stop()
+        basic_setup.bg.__init__("assets/bg3.png")
+        musica.__init__("Lake Jupiter - John Patitucci (online-audio-converter.com).ogg")
+        musica.loop = True
+        musica.play()
+
+        return -1
         
 
     def play_fase_1(self):

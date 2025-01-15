@@ -17,7 +17,9 @@ class Fase1:
         self.som_guindaste = Sound("assets/som_guindaste.ogg")
         self.som_guindaste_active = False
 
-
+        self.som_vitoria = Sound("assets/level-win.mp3")
+        self.som_vitoria.set_volume(150)
+        self.tempo_vitoria = 1.5
         self.transicao = Transition()
         
 
@@ -316,6 +318,17 @@ class Fase1:
                 self.manual.set_position(basic_setup.janela.width - self.manual.width - 50 , basic_setup.janela.height - self.manual.height - 25)
 
             if self.pudim.collided(self.coleira):
+                self.som_vitoria.play()
+                while self.tempo_vitoria > 0:
+                    basic_setup.bg.draw()
+                    self.draw_images()
+                    self.julia.draw()
+                    self.pudim.draw()
+                    self.coleira.draw()
+                    self.manual.draw()
+                    self.tempo_vitoria -= basic_setup.janela.delta_time()
+                    basic_setup.janela.update()
+                
                 return -1
             
             basic_setup.janela.update()
