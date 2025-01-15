@@ -27,9 +27,10 @@ while True:
 
     match menu.click_button_index:
         case(0):
-            fase2(basic_setup.janela,basic_setup.mouse,basic_setup.teclado)
+            game.play_intro_fase_1()
             game.play_fase_1()
-            perfomance_monitor.measure_fps()
+            game.play_intro_fase_2()
+            fase2(basic_setup.janela,basic_setup.mouse,basic_setup.teclado)
         case(-1):
             menu.draw_menu()
 
