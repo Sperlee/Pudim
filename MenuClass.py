@@ -11,7 +11,7 @@ class Menu():
         self.teclado = basic_setup.teclado
         self.mouse = basic_setup.mouse
         
-        self.current_buttons_words = ["START", "SAIR"]
+        self.current_buttons_words = ["JOGAR", "SAIR"]
         self.current_buttons = [GameImage("./assets/button.png") for i in range(len(self.current_buttons_words))]
         self.click_button_index = -1
         
