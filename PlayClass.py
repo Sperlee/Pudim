@@ -7,6 +7,8 @@ class Play():
     def __init__(self):
         self.tempo_texto_1 = 1
         self.tempo_texto_2 = 1
+        self.tempo_texto_3 = 1
+        self.tempo_texto_4 = 1
         self.acumulador = 0
         self.transicao = Transition()
 
@@ -46,7 +48,7 @@ class Play():
         basic_setup.bg.__init__(self.bg_1)
         self.transicao.fade_in()
 
-        while self.tempo_texto_1 > 0:
+        while basic_setup.teclado.key_pressed("SPACE") == False:
             basic_setup.bg.draw()
             basic_setup.draw_pixel_text(
             self.texto_1, 
@@ -65,7 +67,7 @@ class Play():
         self.transicao.fade_in()
 
 
-        while self.tempo_texto_2 > 0:
+        while basic_setup.teclado.key_pressed("SPACE") == False:
             basic_setup.bg.draw()
             basic_setup.draw_pixel_text(
             self.texto_2, 
@@ -88,7 +90,7 @@ class Play():
         basic_setup.bg.__init__(self.bg_2)
         self.transicao.fade_in()
 
-        while self.tempo_texto_1 > 0:
+        while basic_setup.teclado.key_pressed("SPACE") == False:
             basic_setup.bg.draw()
             basic_setup.draw_pixel_text(
             self.texto_3, 
@@ -99,7 +101,7 @@ class Play():
            
         )
             basic_setup.janela.update()
-            self.tempo_texto_1 -= basic_setup.janela.delta_time()
+            self.tempo_texto_3 -= basic_setup.janela.delta_time()
 
         self.transicao.fade_out()
 
@@ -107,7 +109,7 @@ class Play():
         self.transicao.fade_in()
 
 
-        while self.tempo_texto_2 > 0:
+        while basic_setup.teclado.key_pressed("SPACE") == False:
             basic_setup.bg.draw()
             basic_setup.draw_pixel_text(
             self.texto_4, 
@@ -118,7 +120,7 @@ class Play():
            
         )
             basic_setup.janela.update()
-            self.tempo_texto_2 -= basic_setup.janela.delta_time()
+            self.tempo_texto_4 -= basic_setup.janela.delta_time()
         self.transicao.fade_out()
         self.transicao.fade_in()
     
