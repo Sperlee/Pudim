@@ -87,7 +87,7 @@ class Fase1:
 
         #Objetivo
         self.coleira = Sprite("fases/fase1/imagens/coleira.png")
-        self.coleira.set_position(self.conteiner.x + 50, self.conteiner.y - self.coleira.height + 10)
+        self.coleira.set_position(self.conteiner.x + self.conteiner.width/2 + 40, self.conteiner.y - self.coleira.height -30)
 
         self.coleira_speed = 200
 
@@ -102,7 +102,7 @@ class Fase1:
         self.pergaminho_regras.set_position(25 ,50)
         # basic_setup.set_scale("fases/fase1/imagens/regras.png", 1.1)
 
-        self.texto_regras = ["1. Use as setas para mover a Julia", "2. Apertando a letra 'O' você assume o controle do outro personagem", "3. Use a barra de espaço para pular com o pudim", "4. Use a barra de espaço para controlar o guindaste com a Julia", "5. Quando controlando o guindaste, use a tecla 'A' para pegar uma caixa", "e a tecla 'D' para soltá-la", "6. Caixas menores não podem ficar em cima de caixas maiores"]
+        self.texto_regras = ["1. Use as setas para mover a Julia", "2. Apertando a letra 'O' você assume o controle do outro personagem", "3. Use a barra de espaço para pular com o pudim", "4. Use a barra de espaço para controlar o guindaste com a Julia", "5. Quando controlando o guindaste, use a tecla 'A' para pegar uma caixa", "e a tecla 'D' para soltá-la", "6. Caixas maiores não podem ficar em cima de caixas menores"]
 
     def draw_images(self):
         for image in self.images:
@@ -114,7 +114,7 @@ class Fase1:
 
     def set_caixas_position(self):
 
-        self.caixas[4].set_position(500, self.piso.y - self.caixas[4].height)
+        self.caixas[4].set_position(1100, self.piso.y - self.caixas[4].height)
         for i in range(len(self.caixas)-2, -1, -1):
             self.caixas[i].y = self.caixas[i+1].y - self.caixas[i].height + 10
             self.caixas[i].x = self.caixas[i+1].x +50
@@ -177,6 +177,10 @@ class Fase1:
             
             if caixa.x >= self.divs[i].x + self.divs[i].width and caixa.x + caixa.width < self.divs[i+1].x:
                 div1 = i + 1
+        
+        if(self.caixas.index(caixa) == 4 and caixa.x >= self.divs[2].x):
+            div1 = 3
+
            
         return div1
 
@@ -190,6 +194,7 @@ class Fase1:
         for i in range(index, 0, -1):
             div1 = self.qual_divisoria(self.caixas[index])
             div2 = self.qual_divisoria(self.caixas[i-1])
+            
 
             if (div1 == -1 or div2 == -1 or div1 == div2) and not (self.caixas[index].x > self.caixas[i-1].x and self.caixas[index].x + self.caixas[index].width < self.caixas[i-1].x + self.caixas[i-1].width):
                 return False
