@@ -114,7 +114,7 @@ class Fase1:
 
     def set_caixas_position(self):
 
-        self.caixas[4].set_position(500, self.piso.y - self.caixas[4].height)
+        self.caixas[4].set_position(1100, self.piso.y - self.caixas[4].height)
         for i in range(len(self.caixas)-2, -1, -1):
             self.caixas[i].y = self.caixas[i+1].y - self.caixas[i].height + 10
             self.caixas[i].x = self.caixas[i+1].x +50
