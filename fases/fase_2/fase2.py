@@ -101,5 +101,5 @@ def fase2(janela,mouse,teclado):
         pudim.draw()
         julia.draw()
         sapo_verde.draw()
-        lacinho.draw()
+        #lacinho.draw()
         janela.update()

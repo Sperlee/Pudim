@@ -1,10 +1,10 @@
 from PPlay.sprite import Sprite
 from BaseClass import basic_setup
-import math
 
 
 class Pudim(Sprite):
     def __init__(self):
+
         super().__init__("sprites/pudim/pudim_parado.png")
         self.set_total_duration(1000)
         self.speed_x = 200

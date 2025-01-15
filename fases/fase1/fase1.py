@@ -6,10 +6,20 @@ from fases.fase1.Pudim import Pudim
 import pygame
 import math
 from Transition import Transition
+from PPlay.sound import Sound
 
 class Fase1:
     def __init__(self):
 
+        self.som_pulo = Sound("assets/sound_jump.ogg")
+        self.som_pulo.set_volume(150)
+
+        self.som_guindaste = Sound("assets/som_guindaste.ogg")
+        self.som_guindaste_active = False
+
+        self.som_vitoria = Sound("assets/level-win.mp3")
+        self.som_vitoria.set_volume(150)
+        self.tempo_vitoria = 1.5
         self.transicao = Transition()
         
 
@@ -92,7 +102,7 @@ class Fase1:
         self.pergaminho_regras.set_position(25 ,50)
         # basic_setup.set_scale("fases/fase1/imagens/regras.png", 1.1)
 
-        self.texto_regras = ["1. Use as setas para mover a Julia", "2. Apertando a letra 'O' você assume o controle do outro personagem", "3. Use a barra de espaço para pular com o pudim", "4. Use a barra de espaço para controlar o guindaste com a Julia", "5. Quando controlando o guindaste,", "use a tecla 'A' para pegar uma caixa", "e a tecla 'D' para soltá-la", "6. Caixas menores não podem ficar em cima de caixas grandes"]
+        self.texto_regras = ["1. Use as setas para mover a Julia", "2. Apertando a letra 'O' você assume o controle do outro personagem", "3. Use a barra de espaço para pular com o pudim", "4. Use a barra de espaço para controlar o guindaste com a Julia", "5. Quando controlando o guindaste, use a tecla 'A' para pegar uma caixa", "e a tecla 'D' para soltá-la", "6. Caixas menores não podem ficar em cima de caixas maiores"]
 
     def draw_images(self):
         for image in self.images:
@@ -104,7 +114,7 @@ class Fase1:
 
     def set_caixas_position(self):
 
-        self.caixas[4].set_position(1100, self.piso.y - self.caixas[4].height)
+        self.caixas[4].set_position(500, self.piso.y - self.caixas[4].height)
         for i in range(len(self.caixas)-2, -1, -1):
             self.caixas[i].y = self.caixas[i+1].y - self.caixas[i].height + 10
             self.caixas[i].x = self.caixas[i+1].x +50
@@ -116,17 +126,28 @@ class Fase1:
             limite_superior = (self.gancho.y >= self.guindaste_superior.y + self.guindaste_superior.height + 30) or (basic_setup.teclado.key_pressed("DOWN"))
 
             if(limite_superior and limite_inferior):
+                if not self.som_guindaste_active:
+                    self.som_guindaste.play()
+                    self.som_guindaste_active = True
                 self.cabo_guindaste.move_key_y(self.guindaste_speed*basic_setup.janela.delta_time())
                 self.gancho.move_key_y(self.guindaste_speed*basic_setup.janela.delta_time())
+            else:
+                self.som_guindaste.stop()
+                self.som_guindaste_active = False
 
 
             limite_esquerdo = (self.gancho.x >= self.guindaste_superior.x + 200) or (basic_setup.teclado.key_pressed("RIGHT"))
             limite_direito = (self.gancho.x <= self.guindaste_superior.x + self.guindaste_superior.width - 100) or (basic_setup.teclado.key_pressed("LEFT"))
 
             if(limite_esquerdo and limite_direito):
+                if not self.som_guindaste_active:
+                    self.som_guindaste.play()
+                    self.som_guindaste_active = True
                 self.cabo_guindaste.move_key_x(self.guindaste_speed*basic_setup.janela.delta_time())
                 self.gancho.move_key_x(self.guindaste_speed*basic_setup.janela.delta_time())
-
+            else:
+                self.som_guindaste.stop()
+                self.som_guindaste_active = False
             if(basic_setup.teclado.key_pressed("ESC")):
                 self.play_mode = 0
 
@@ -232,7 +253,9 @@ class Fase1:
                         self.play_mode = 0
                         pygame.time.delay(100)
                     elif basic_setup.teclado.key_pressed("SPACE") or self.pudim.pulando:
+                       
                         if(self.pudim.pulando == False):
+                            self.som_pulo.play()
                             self.pudim.old_y = self.pudim.y
                             self.pudim.pulando = True
                         self.pudim.pular(self.caixas, self.piso, self.conteiner)
@@ -241,8 +264,8 @@ class Fase1:
 
 
                 case 2:
-                    self.texto_manual.set_position(150, self.conteiner.y - 70)
-                    self.texto_manual.draw()
+                    # self.texto_manual.set_position(150, self.conteiner.y - 70)
+                    # self.texto_manual.draw()
 
                     self.mover_guindaste()
 
@@ -295,6 +318,17 @@ class Fase1:
                 self.manual.set_position(basic_setup.janela.width - self.manual.width - 50 , basic_setup.janela.height - self.manual.height - 25)
 
             if self.pudim.collided(self.coleira):
+                self.som_vitoria.play()
+                while self.tempo_vitoria > 0:
+                    basic_setup.bg.draw()
+                    self.draw_images()
+                    self.julia.draw()
+                    self.pudim.draw()
+                    self.coleira.draw()
+                    self.manual.draw()
+                    self.tempo_vitoria -= basic_setup.janela.delta_time()
+                    basic_setup.janela.update()
+                
                 return -1
             
             basic_setup.janela.update()

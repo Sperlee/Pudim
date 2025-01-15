@@ -2,9 +2,16 @@ from PPlay.sprite import Sprite
 from PPlay.keyboard import Keyboard
 from PPlay.window import Window
 from BaseClass import basic_setup
+from PPlay.sound import Sound
+
 
 class Julia(Sprite):
     def __init__(self, janela, x, y, speed_x, speed_y, jump_heigth):
+
+        self.som_andar = Sound("assets/walk.ogg")
+        self.som_andar.set_volume(150)
+
+
         # Chama o método __init__ da classe pai (Sprite)
         super().__init__("sprites/julia_sprites/julia_parada.png")
         self.set_position(x, y)
@@ -39,6 +46,7 @@ class Julia(Sprite):
             if key == "RIGHT":
                 
                 if(not self.is_pulando ):
+                    
                     super().__init__(self.sprite_andando_direita, 9)
                     self.set_total_duration(1000)
                     self.set_position(new_x, new_y)
@@ -47,6 +55,8 @@ class Julia(Sprite):
                     super().__init__(self.sprite_andando_esquerda, 9)
                     self.set_total_duration(1000)
                     self.set_position(new_x, new_y)
+
+            self.som_andar.play()
             # if(self.is_pulando):
             #     super().__init__(self.sprite_pulo)
             #     self.set_total_duration(1000)
@@ -57,6 +67,7 @@ class Julia(Sprite):
 
             self.k = 1
         elif (key != 'RIGHT' and key != 'LEFT') and self.k == 1:
+            self.som_andar.stop()
             # Voltar para animação parada
             super().__init__(self.sprite_parado)
             self.set_total_duration(1000)
