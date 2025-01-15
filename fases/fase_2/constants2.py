@@ -9,6 +9,7 @@ def criar(janela):
     pedras = [1,GameImage("fases/fase_2/imagens/pedra.png"),GameImage("fases/fase_2/imagens/pedra.png"),GameImage("fases/fase_2/imagens/pedra.png"),GameImage("fases/fase_2/imagens/pedra.png"),GameImage("fases/fase_2/imagens/pedra.png"),GameImage("fases/fase_2/imagens/pedra.png"),GameImage("fases/fase_2/imagens/pedra.png"),1]
     lacinho = GameImage("fases/fase_2/imagens/lacinho.png")
     efeito = GameImage("fases/fase_2/imagens/efeito.png")
+    ponte = GameImage("fases/fase_2/imagens/ponte.png")
 
 
     # Posições iniciais
@@ -41,11 +42,15 @@ def criar(janela):
     efeito.x = janela.width - lacinho.width
     efeito.y = janela.height - lacinho.height - 75
 
-    return fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho, efeito
+    #ponte
+    ponte.x = sapo_vermelho[2].x - 10
+    ponte.y = janela.height - pedras[1].height 
 
-def draw(janela, fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho, efeito):
+    return fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho, efeito, ponte
+
+def draw(janela, fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho, efeito,ponte):
     fundo.draw()
-    for i in range(1,8):
+    for i in range(1,7):
         pedras[i].draw()
     for i in range(3):
         sapo_vermelho[i].draw()
@@ -53,9 +58,10 @@ def draw(janela, fundo, pudim, julia, sapo_verde, sapo_vermelho, pedras, lacinho
     julia.draw()
     sapo_verde.draw()
     lacinho.draw()
+    ponte.draw()
     janela.update()
 
-def reset(janela,pudim, julia, sapo_verde, sapo_vermelho, pedras):
+def reset(janela,pudim, julia, sapo_verde, sapo_vermelho, pedras,ponte):
      #pedras
     for i in range(1,8):
         pedras[i].x = (i-1) * 200
@@ -77,4 +83,6 @@ def reset(janela,pudim, julia, sapo_verde, sapo_vermelho, pedras):
     for i in range(3):
         sapo_vermelho[i].x = pedras[i+5].x + sapo_vermelho[i].width/2 - 20
         sapo_vermelho[i].y = janela.height - pedras[1].height - 20
-    
+    #ponte
+    ponte.x = sapo_vermelho[2].x - 10
+    ponte.y = janela.height - pedras[1].height 
