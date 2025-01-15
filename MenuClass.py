@@ -24,7 +24,7 @@ class Menu():
         # Criando os objetos GameImage e atribuindo suas posições
         for button in self.current_buttons:
     
-            button.set_position(constants.WINDOW_WIDTH / 2 - constants.BUTTON_WIDTH / 2, y)
+            button.set_position(constants.BUTTON_WIDTH / 2, y)
             
             # Atualiza a posição y para o próximo botão, somando a margem
             y += margin
@@ -39,15 +39,15 @@ class Menu():
 
             #Por algum motivo a palavra DIFICULDADE estava ficando mal centralizada, então fiz um ajuste só pra que ela ficasse centralizada
             if(self.current_buttons_words[i] == "DIFICULDADE"):
-                text_x = self.current_buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 - 25
+                text_x = self.current_buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 - 50
             else:
-                text_x = self.current_buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 -15
-            text_y = constants.BUTTON_MARGIN_TOP + i * constants.BUTTON_MARGIN + constants.BUTTON_HEIGHT/2 - text_height/2 - 5
-            self.janela.draw_text(self.current_buttons_words[i], text_x, text_y, constants.MENU_FONT_SIZE, constants.TEXT_COLOR)
+                text_x = self.current_buttons[i].x + constants.BUTTON_WIDTH/2 - text_width/2 - 50
+            text_y = constants.BUTTON_MARGIN_TOP + i * constants.BUTTON_MARGIN + constants.BUTTON_HEIGHT/2 - text_height/2 - 10
+            basic_setup.draw_pixel_text([self.current_buttons_words[i]], text_x, text_y, constants.MENU_FONT_SIZE, constants.TEXT_COLOR)
 
             if self.mouse.is_over_object(self.current_buttons[i]):
 
-                self.janela.draw_text(self.current_buttons_words[i], text_x, text_y, constants.MENU_FONT_SIZE, constants.HOVER_TEXT_COLOR)
+                basic_setup.draw_pixel_text([self.current_buttons_words[i]], text_x, text_y, constants.MENU_FONT_SIZE, constants.HOVER_TEXT_COLOR)
 
                 if self.mouse.is_button_pressed(1):
                     self.click_button_index = i
